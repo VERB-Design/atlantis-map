@@ -52,7 +52,7 @@
   function apply() {
     stage.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0) scale(' + s + ')';
     stage.style.setProperty('--inv', 1 / s);
-    app.classList.toggle('is-zoomed', s > minScale * 1.3);
+    app.classList.toggle('is-zoomed', s > (vw / MAP_W) * 1.25);
   }
 
   function setView(nx, ny, ns) {
@@ -87,18 +87,42 @@
 
   /* -------------------------------------------------------- sizing */
 
+  /* Vertical band the markers actually occupy, as a 0-1 fraction of the
+     map height. The resting view is framed on this rather than on the
+     artwork's centre, so no pin falls outside the default crop. */
+  var band = null;
+  function markerBand() {
+    if (band) return band;
+    var lo = 1, hi = 0;
+    PLACES.forEach(function (p) {
+      var y = p.y / 100;
+      if (y < lo) lo = y;
+      if (y > hi) hi = y;
+    });
+    band = (lo + hi) / 2;
+    return band;
+  }
+
+  /* Resting view: the map spans the full viewport width. */
+  function defaultView() {
+    var ds = clamp(vw / MAP_W, minScale, MAX_SCALE);
+    return [(vw - MAP_W * ds) / 2, vh / 2 - markerBand() * MAP_H * ds, ds];
+  }
+
   function measure(keepAnchor) {
     var anchorX = (vw / 2 - tx) / s, anchorY = (vh / 2 - ty) / s;
     vw = viewport.clientWidth;
     vh = viewport.clientHeight;
-    /* fit the whole map — every marker stays reachable at rest */
+    /* floor is still fit-the-whole-map, so the user can always zoom out
+       past full width to see the entire island */
     minScale = Math.min(vw / MAP_W, vh / MAP_H);
 
     if (keepAnchor && s > 0) {
       var ns = Math.max(s, minScale);
       setView(vw / 2 - anchorX * ns, vh / 2 - anchorY * ns, ns);
     } else {
-      setView((vw - MAP_W * minScale) / 2, (vh - MAP_H * minScale) / 2, minScale);
+      var d = defaultView();
+      setView(d[0], d[1], d[2]);
     }
   }
 
@@ -257,7 +281,8 @@
     app.classList.remove('tray-open');
     tray.setAttribute('aria-hidden', 'true');
     if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
-    tweenTo((vw - MAP_W * minScale) / 2, (vh - MAP_H * minScale) / 2, minScale, 850);
+    var d = defaultView();
+    tweenTo(d[0], d[1], d[2], 850);
   }
 
   /* ------------------------------------------------- pan / zoom in */
