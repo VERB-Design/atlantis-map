@@ -69,6 +69,7 @@ html,body{
   width:2016px; height:1287px;
   user-select:none; -webkit-user-drag:none;
   pointer-events:none;
+  opacity:.5;   /* faded base map — markers stay at full strength */
 }
 
 #vignette{ display:none; }
@@ -194,8 +195,8 @@ html,body{
   line-height:1;
   letter-spacing:.30em;
   text-transform:uppercase;
-  color:#fff;
-  text-shadow:0 2px 16px rgba(31,35,40,.8), 0 0 4px rgba(31,35,40,.5);
+  color:var(--ink);
+  text-shadow:0 1px 12px rgba(255,255,255,.9);
 }
 #brand p{
   margin:9px 0 0 4px;
@@ -203,8 +204,8 @@ html,body{
   font-weight:300;
   letter-spacing:.38em;
   text-transform:uppercase;
-  color:rgba(255,255,255,.88);
-  text-shadow:0 1px 10px rgba(31,35,40,.8);
+  color:var(--muted);
+  text-shadow:0 1px 10px rgba(255,255,255,.9);
 }
 #app.tray-open #brand{ opacity:0 !important; transform:translateX(-24px); }
 
@@ -239,10 +240,10 @@ html,body{
   z-index:20; margin:0;
   font-size:9px; font-weight:400;
   letter-spacing:.26em; text-transform:uppercase;
-  /* sits on the artwork, which runs light-to-dark — white on a dark
-     shadow is the only treatment legible across all of it */
-  color:#fff;
-  text-shadow:0 1px 10px rgba(31,35,40,.85), 0 0 3px rgba(31,35,40,.6);
+  /* the base map is faded to 50%, so it never goes dark enough to need
+     reversed-out type */
+  color:var(--muted);
+  text-shadow:0 1px 10px rgba(255,255,255,.9);
   pointer-events:none;
   transition:opacity .4s var(--ease);
 }
