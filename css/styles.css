@@ -178,17 +178,15 @@ html,body{
 
 /* ---------------------------------------------------------- BRAND */
 
-/* The artwork carries its own ATLANTIS wordmark at rest, so the UI lockup
-   only appears once the user has zoomed past it. */
+/* The clean artwork carries no wordmark of its own, so the UI lockup is
+   the only branding and stays visible. */
 #brand{
   position:absolute; top:38px; left:44px;
   z-index:20;
   pointer-events:none;
-  opacity:0;
-  transform:translateY(-8px);
+  opacity:1;
   transition:opacity .5s var(--ease), transform .5s var(--ease);
 }
-#app.is-zoomed #brand{ opacity:1; transform:none; }
 #brand h1{
   margin:0;
   font-weight:300;
@@ -197,7 +195,7 @@ html,body{
   letter-spacing:.30em;
   text-transform:uppercase;
   color:#fff;
-  text-shadow:0 2px 16px rgba(31,35,40,.75);
+  text-shadow:0 2px 16px rgba(31,35,40,.8), 0 0 4px rgba(31,35,40,.5);
 }
 #brand p{
   margin:9px 0 0 4px;
@@ -241,7 +239,10 @@ html,body{
   z-index:20; margin:0;
   font-size:9px; font-weight:400;
   letter-spacing:.26em; text-transform:uppercase;
-  color:var(--muted);
+  /* sits on the artwork, which runs light-to-dark — white on a dark
+     shadow is the only treatment legible across all of it */
+  color:#fff;
+  text-shadow:0 1px 10px rgba(31,35,40,.85), 0 0 3px rgba(31,35,40,.6);
   pointer-events:none;
   transition:opacity .4s var(--ease);
 }

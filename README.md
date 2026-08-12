@@ -33,7 +33,8 @@ index.html          markup + cache-busted asset links
 css/styles.css      all styling
 js/data.js          the 21 places — copy, coordinates, links   <- edit this
 js/map.js           pan/zoom engine, markers, tray
-assets/atlantis-map.jpg   source artwork (2016 × 1287)
+assets/atlantis-map.jpg   clean greyscale artwork (3456 × 2206)
+assets/img/*.jpg          21 place photographs, 1:1
 ```
 
 ## Editing content
@@ -64,14 +65,17 @@ they're resolution-independent.
 - **Tray imagery** is real photography pulled from atlantisbahamas.com's own
   CDN, cropped 1:1 to 800x800 in `assets/img/<id>.jpg`. Swap any of them by
   replacing the file, or point `image:` in `js/data.js` somewhere else.
-- **Map resolution** is 2016 × 1287, which is why max zoom is capped at 2.8×.
-  A higher-res export would allow deeper zoom and a sharper focused view.
 - **Skin**: `#254297` is the only brand colour and is reserved for primary
   actions. Everything secondary is grey. Colour survives only on the map
   pins, one hue per category.
 - **Drawer** is 400px max-width with a 1:1 hero image and top-aligned copy.
 - **Outfit is the only typeface**, loaded from Google Fonts at 200-600.
-- The legend printed on the original artwork (bottom right) is now visible
-  again — the overlaid "Map Key" panel was removed on request.
+- The artwork is the **clean greyscale render** — no labels, legend, pins or
+  wordmark baked in, so the UI supplies all of them and the coloured pins are
+  the only colour on the page. It is laid out at 2016 × 1287 while the file is
+  3456px wide, giving ~1.7x for crisp zooming; every marker coordinate is a
+  percentage of that layout box, so swapping the artwork for another render
+  with the same framing needs no coordinate changes.
 - Copy and links sourced from atlantisbahamas.com, August 2026.
-- Bump the `?v=N` params in `index.html` after any css/js change.
+- Bump the `?v=N` params in `index.html` (css, js, and the map `<img>`) and
+  in `js/data.js` (the photo paths) after changing any asset.

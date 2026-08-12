@@ -6,8 +6,11 @@
 (function () {
   'use strict';
 
-  var MAP_W = 2016, MAP_H = 1287;   // natural size of assets/atlantis-map.jpg
-  var MAX_SCALE = 2.8;
+  /* Layout space for the map. The asset is 3456px wide but is laid out at
+     2016x1287, so it renders at ~1.7x for crisp zooming while every marker
+     coordinate stays a plain percentage of this box. */
+  var MAP_W = 2016, MAP_H = 1287;
+  var MAX_SCALE = 3.2;
 
   var app      = document.getElementById('app');
   var viewport = document.getElementById('viewport');
