@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<title>Atlantis Paradise Island — Interactive Resort Map</title>
+<meta name="description" content="Explore Atlantis Paradise Island: five places to stay and the experiences across 141 acres of Aquaventure, marine habitats, beaches and Marina Village.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=11">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============================================================ MAP -->
+  <div id="viewport" aria-label="Atlantis Paradise Island resort map">
+    <div id="bleed" aria-hidden="true"></div>
+    <div id="stage">
+      <img id="mapimg" src="assets/atlantis-map.jpg" alt="Illustrated aerial map of Atlantis Paradise Island, Bahamas" draggable="false">
+      <div id="markers"></div>
+      <!-- glass panel that replaces the legend printed on the artwork -->
+      <div id="maplegend"></div>
+    </div>
+    <div id="vignette" aria-hidden="true"></div>
+  </div>
+
+  <!-- ========================================================= BRAND -->
+  <header id="brand">
+    <h1>Atlantis</h1>
+    <p>Paradise Island · Bahamas</p>
+  </header>
+
+  <!-- ========================================================= HINT -->
+  <p id="hint" aria-hidden="true">Select a marker to explore</p>
+
+  <!-- ==================================================== SCALE NOTE -->
+  <p id="scalenote">Drag to pan · scroll to zoom</p>
+
+  <!-- ======================================================= FILTERS -->
+  <nav id="filters" aria-label="Filter map by category"></nav>
+
+  <!-- ======================================================= ZOOM UI -->
+  <div id="zoomui">
+    <button type="button" data-zoom="in"  aria-label="Zoom in">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <button type="button" data-zoom="out" aria-label="Zoom out">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
+    </button>
+    <button type="button" data-zoom="reset" aria-label="Reset map view">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V4h5M21 15v5h-5M21 9V4h-5M3 15v5h5"/></svg>
+    </button>
+  </div>
+
+  <!-- ========================================================== TRAY -->
+  <aside id="tray" role="dialog" aria-modal="false" aria-labelledby="tray-title" aria-hidden="true" tabindex="-1">
+    <button type="button" id="tray-close" aria-label="Close panel">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <div id="tray-hero">
+      <div id="tray-hero-img" aria-hidden="true"></div>
+      <div id="tray-hero-scrim" aria-hidden="true"></div>
+      <span id="tray-cat"></span>
+    </div>
+
+    <div id="tray-body">
+      <p id="tray-kicker"></p>
+      <h2 id="tray-title"></h2>
+      <p id="tray-blurb"></p>
+
+      <h3 class="tray-label">Good to know</h3>
+      <ul id="tray-points"></ul>
+    </div>
+
+    <div id="tray-actions">
+      <a id="tray-learn" class="btn btn-ghost" href="#" target="_blank" rel="noopener noreferrer">Learn more</a>
+      <a id="tray-book"  class="btn btn-solid" href="#" target="_blank" rel="noopener noreferrer">Book</a>
+    </div>
+  </aside>
+
+</div>
+
+<script src="js/data.js?v=11"></script>
+<script src="js/map.js?v=11"></script>
+</body>
+</html>
