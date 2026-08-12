@@ -6,17 +6,18 @@ const BOOK_STAY = 'https://secure.atlantisbahamas.com/';
 const BOOK_PLAY = 'https://www.atlantisbahamas.com/already-booked-things-to-do-atlantis';
 
 const CATEGORIES = {
-  stay:    { label: 'Where to Stay',   short: 'Stay',    color: '#BE914F' },
-  thrills: { label: 'Water & Thrills', short: 'Thrills', color: '#2949E5' },
-  marine:  { label: 'Marine Life',     short: 'Marine',  color: '#3AB0C8' },
-  beaches: { label: 'Beaches & Pools', short: 'Beaches', color: '#27455C' },
-  play:    { label: 'Play & Unwind',   short: 'Play',    color: '#EB897C' }
+  stay:    { label: 'Where to Stay',   short: 'Stay',    color: '#254297' },
+  thrills: { label: 'Water & Thrills', short: 'Thrills', color: '#3AB0C8' },
+  marine:  { label: 'Marine Life',     short: 'Marine',  color: '#2F9E77' },
+  beaches: { label: 'Beaches & Pools', short: 'Beaches', color: '#EB897C' },
+  play:    { label: 'Play & Unwind',   short: 'Play',    color: '#7C5DA8' }
 };
 
 const PLACES = [
   /* ---------------------------------------------------------------- STAY */
   {
     id: 'royal',
+    image: 'assets/img/royal.jpg',
     cat: 'stay',
     name: 'The Royal',
     kicker: 'The beacon of Atlantis',
@@ -33,6 +34,7 @@ const PLACES = [
   },
   {
     id: 'cove',
+    image: 'assets/img/cove.jpg',
     cat: 'stay',
     name: 'The Cove',
     kicker: 'All-suite, ocean-facing luxury',
@@ -49,6 +51,7 @@ const PLACES = [
   },
   {
     id: 'reef',
+    image: 'assets/img/reef.jpg',
     cat: 'stay',
     name: 'The Reef',
     kicker: 'Residences with kitchens',
@@ -65,6 +68,7 @@ const PLACES = [
   },
   {
     id: 'coral',
+    image: 'assets/img/coral.jpg',
     cat: 'stay',
     name: 'The Coral',
     kicker: 'Fresh design, marina views',
@@ -81,6 +85,7 @@ const PLACES = [
   },
   {
     id: 'harborside',
+    image: 'assets/img/harborside.jpg',
     cat: 'stay',
     name: 'Harborside Resort',
     kicker: 'Villas on the harbour',
@@ -99,6 +104,7 @@ const PLACES = [
   /* ------------------------------------------------------------- THRILLS */
   {
     id: 'aquaventure',
+    image: 'assets/img/aquaventure.jpg',
     cat: 'thrills',
     name: 'Aquaventure',
     kicker: '141 acres of water',
@@ -115,6 +121,7 @@ const PLACES = [
   },
   {
     id: 'power-tower',
+    image: 'assets/img/power-tower.jpg',
     cat: 'thrills',
     name: 'Power Tower',
     kicker: 'The Abyss · The Drop · The Surge · The Falls',
@@ -131,6 +138,7 @@ const PLACES = [
   },
   {
     id: 'mayan-temple',
+    image: 'assets/img/mayan-temple.jpg',
     cat: 'thrills',
     name: 'Mayan Temple',
     kicker: 'Leap of Faith',
@@ -147,6 +155,7 @@ const PLACES = [
   },
   {
     id: 'rapids-river',
+    image: 'assets/img/rapids-river.jpg',
     cat: 'thrills',
     name: 'The Rapids River',
     kicker: 'A mile of moving water',
@@ -165,6 +174,7 @@ const PLACES = [
   /* -------------------------------------------------------------- MARINE */
   {
     id: 'the-dig',
+    image: 'assets/img/the-dig.jpg',
     cat: 'marine',
     name: 'The Dig',
     kicker: 'The Lost City, below sea level',
@@ -181,6 +191,7 @@ const PLACES = [
   },
   {
     id: 'dolphin-cay',
+    image: 'assets/img/dolphin-cay.jpg',
     cat: 'marine',
     name: 'Dolphin Cay',
     kicker: '14 acres · rescue and rehabilitation',
@@ -197,6 +208,7 @@ const PLACES = [
   },
   {
     id: 'predator-lagoon',
+    image: 'assets/img/predator-lagoon.jpg',
     cat: 'marine',
     name: 'Predator Lagoon',
     kicker: 'A 100-foot tunnel through the sharks',
@@ -215,6 +227,7 @@ const PLACES = [
   /* ------------------------------------------------------------- BEACHES */
   {
     id: 'cove-beach',
+    image: 'assets/img/cove-beach.jpg',
     cat: 'beaches',
     name: 'Cove Beach',
     kicker: 'The quiet crescent',
@@ -231,6 +244,7 @@ const PLACES = [
   },
   {
     id: 'paradise-lagoon',
+    image: 'assets/img/paradise-lagoon.jpg',
     cat: 'beaches',
     name: 'Paradise Lagoon',
     kicker: 'Seven acres of protected water',
@@ -249,6 +263,7 @@ const PLACES = [
   /* ---------------------------------------------------------------- PLAY */
   {
     id: 'casino',
+    image: 'assets/img/casino.jpg',
     cat: 'play',
     name: 'The Casino',
     kicker: 'Built over a seven-acre lagoon',
@@ -265,6 +280,7 @@ const PLACES = [
   },
   {
     id: 'mandara-spa',
+    image: 'assets/img/mandara-spa.jpg',
     cat: 'play',
     name: 'Mandara Spa',
     kicker: 'Balinese healing, Bahamian setting',
@@ -281,6 +297,7 @@ const PLACES = [
   },
   {
     id: 'marina-village',
+    image: 'assets/img/marina-village.jpg',
     cat: 'play',
     name: 'Marina Village',
     kicker: '65,000 sq ft of shops and tables',
@@ -297,6 +314,7 @@ const PLACES = [
   },
   {
     id: 'atlantis-marina',
+    image: 'assets/img/atlantis-marina.jpg',
     cat: 'play',
     name: 'Atlantis Marina',
     kicker: 'Deep-water berths for 63 yachts',
@@ -313,6 +331,7 @@ const PLACES = [
   },
   {
     id: 'theatre',
+    image: 'assets/img/theatre.jpg',
     cat: 'play',
     name: 'Atlantis Theatre & Nightlife',
     kicker: 'Atlantis LIVE · Aura · The Dilly Club',
@@ -329,6 +348,7 @@ const PLACES = [
   },
   {
     id: 'kids',
+    image: 'assets/img/kids.jpg',
     cat: 'play',
     name: 'Atlantis Kids Adventures',
     kicker: 'Ages 3–12',
@@ -345,6 +365,7 @@ const PLACES = [
   },
   {
     id: 'golf',
+    image: 'assets/img/golf.jpg',
     cat: 'play',
     name: 'Ocean Club Golf Course',
     kicker: 'Tom Weiskopf · par 72',

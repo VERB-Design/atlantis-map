@@ -8,7 +8,6 @@
 
   var MAP_W = 2016, MAP_H = 1287;   // natural size of assets/atlantis-map.jpg
   var MAX_SCALE = 2.8;
-  var HERO_K = 1.9;                 // zoom factor for the tray hero crop
 
   var app      = document.getElementById('app');
   var viewport = document.getElementById('viewport');
@@ -149,7 +148,7 @@
   /* ------------------------------------------------------- filters */
 
   function buildFilters() {
-    var defs = [{ key: 'all', label: 'All', color: '#1B2A38' }];
+    var defs = [{ key: 'all', label: 'All', color: '#1F2328' }];
     Object.keys(CATEGORIES).forEach(function (k) {
       defs.push({ key: k, label: CATEGORIES[k].short, color: CATEGORIES[k].color });
     });
@@ -191,15 +190,7 @@
   /* ---------------------------------------------------------- tray */
 
   function paintHero(p) {
-    var w = heroImg.clientWidth || 440;
-    var h = heroImg.clientHeight || 236;
-    var bw = MAP_W * HERO_K, bh = MAP_H * HERO_K;
-    var px = (p.x / 100) * bw, py = (p.y / 100) * bh;
-    var bx = clamp(w / 2 - px, w - bw, 0);
-    var by = clamp(h / 2 - py, h - bh, 0);
-
-    heroImg.style.backgroundSize = bw + 'px ' + bh + 'px';
-    heroImg.style.backgroundPosition = bx + 'px ' + by + 'px';
+    heroImg.style.backgroundImage = p.image ? 'url("' + p.image + '")' : 'none';
   }
 
   function open(id) {
@@ -213,9 +204,6 @@
     if (activeId && nodes[activeId]) nodes[activeId].classList.remove('is-active');
     nodes[p.id].classList.add('is-active');
     activeId = p.id;
-
-    /* accent */
-    app.style.setProperty('--accent', CATEGORIES[p.cat].color);
 
     /* content */
     document.getElementById('tray-cat').textContent    = CATEGORIES[p.cat].label;
@@ -244,7 +232,7 @@
     tray.setAttribute('aria-hidden', 'false');
     document.getElementById('tray-body').scrollTop = 0;
 
-    requestAnimationFrame(function () { paintHero(p); });
+    paintHero(p);
 
     /* fly the map to the marker, offset for the tray */
     focusPlace(p);
@@ -268,7 +256,6 @@
     activeId = null;
     app.classList.remove('tray-open');
     tray.setAttribute('aria-hidden', 'true');
-    app.style.setProperty('--accent', '#BE914F');
     if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
     tweenTo((vw - MAP_W * minScale) / 2, (vh - MAP_H * minScale) / 2, minScale, 850);
   }
@@ -374,7 +361,7 @@
     measure(true);
     var p = null;
     if (activeId) { for (var i = 0; i < PLACES.length; i++) if (PLACES[i].id === activeId) p = PLACES[i]; }
-    if (p) { paintHero(p); focusPlace(p); }
+    if (p) focusPlace(p);
   });
 
   /* ---------------------------------------------------------- boot */

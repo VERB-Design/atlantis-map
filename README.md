@@ -48,6 +48,7 @@ Everything editable lives in `js/data.js`. Each entry:
   kicker: '14 acres · rescue and rehabilitation',
   x: 54.1, y: 14.6,         // % of the map image — this is the pin position
   zoom: 2.11,               // how far to fly in (× the fitted view)
+  image: 'assets/img/dolphin-cay.jpg',
   blurb: '…',
   points: ['…','…','…'],    // exactly 3
   learn: 'https://…',
@@ -60,15 +61,15 @@ they're resolution-independent.
 
 ## Notes for next pass
 
-- **Tray imagery** is currently a zoomed crop of the map artwork itself. To use
-  real photography, drop files into `assets/img/` and swap the
-  `#tray-hero-img` background in `paintHero()` (`js/map.js`) for `p.image`.
+- **Tray imagery** is real photography pulled from atlantisbahamas.com's own
+  CDN, cropped 1:1 to 800x800 in `assets/img/<id>.jpg`. Swap any of them by
+  replacing the file, or point `image:` in `js/data.js` somewhere else.
 - **Map resolution** is 2016 × 1287, which is why max zoom is capped at 2.8×.
   A higher-res export would allow deeper zoom and a sharper focused view.
-- **Skin** follows atlantisbahamas.com: warm cream/white surfaces, light
-  uppercase letterspaced type, and the site's gold `#BE914F` CTA. Category
-  colours are also taken from the live site (gold, brand blue `#2949E5`,
-  turquoise, deep teal `#27455C`, coral `#EB897C`).
+- **Skin**: `#254297` is the only brand colour and is reserved for primary
+  actions. Everything secondary is grey. Colour survives only on the map
+  pins, one hue per category.
+- **Drawer** is 400px max-width with a 1:1 hero image and top-aligned copy.
 - **Outfit is the only typeface**, loaded from Google Fonts at 200-600.
 - The legend printed on the original artwork (bottom right) is now visible
   again — the overlaid "Map Key" panel was removed on request.
