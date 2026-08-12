@@ -22,6 +22,8 @@ points, and **Learn more** / **Book** buttons.
 
 **Interaction**
 - Drag to pan · scroll or pinch to zoom · +/− and reset controls
+- Zooming out stops at full width — the map's left and right edges stay
+  pinned to the viewport edges and never pull in to a letterbox
 - Category filter bar along the bottom
 - `Esc` or a click on open map closes the tray
 - Deep links: `index.html#dolphin-cay` opens straight to a place

@@ -47,7 +47,8 @@
   /* Keep the map covering the viewport at all times. */
   function clampPan(nx, ny, ns) {
     var w = MAP_W * ns, h = MAP_H * ns, pad = trayPad();
-    nx = (w + pad.left) <= vw ? (vw - w) / 2 : clamp(nx, vw - w, pad.left);
+    var slack = Math.min(pad.left, Math.max(0, w - vw));
+    nx = w <= vw ? (vw - w) / 2 : clamp(nx, vw - w, slack);
     ny = (h + pad.bottom) <= vh ? (vh - h) / 2 : clamp(ny, vh - h - pad.bottom, 0);
     return [nx, ny];
   }
@@ -106,6 +107,10 @@
     return band;
   }
 
+  /* Scale at which the whole map would fit. No longer reachable by zooming
+     out, but still the reference the per-place focus zooms are tuned to. */
+  function fitScale() { return Math.min(vw / MAP_W, vh / MAP_H); }
+
   /* Resting view: the map spans the full viewport width. */
   function defaultView() {
     var ds = clamp(vw / MAP_W, minScale, MAX_SCALE);
@@ -116,9 +121,9 @@
     var anchorX = (vw / 2 - tx) / s, anchorY = (vh / 2 - ty) / s;
     vw = viewport.clientWidth;
     vh = viewport.clientHeight;
-    /* floor is still fit-the-whole-map, so the user can always zoom out
-       past full width to see the entire island */
-    minScale = Math.min(vw / MAP_W, vh / MAP_H);
+    /* zoom-out floor is full width: the map's left and right edges stay
+       pinned to the viewport edges, never pulling in to a letterbox */
+    minScale = vw / MAP_W;
 
     if (keepAnchor && s > 0) {
       var ns = Math.max(s, minScale);
@@ -272,7 +277,7 @@
     var targetX = trayW + (vw - trayW) / 2;
     var targetY = isNarrow() ? vh * 0.13 : vh * 0.5;
 
-    var ns = clamp(minScale * (p.zoom || 2.2), minScale, MAX_SCALE);
+    var ns = clamp(fitScale() * (p.zoom || 2.2), minScale, MAX_SCALE);
     var px = (p.x / 100) * MAP_W, py = (p.y / 100) * MAP_H;
 
     tweenTo(targetX - px * ns, targetY - py * ns, ns, 950);
