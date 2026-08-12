@@ -6,11 +6,11 @@ const BOOK_STAY = 'https://secure.atlantisbahamas.com/';
 const BOOK_PLAY = 'https://www.atlantisbahamas.com/already-booked-things-to-do-atlantis';
 
 const CATEGORIES = {
-  stay:    { label: 'Where to Stay',   short: 'Stay',    color: '#E9B75E' },
-  thrills: { label: 'Water & Thrills', short: 'Thrills', color: '#39C7DE' },
-  marine:  { label: 'Marine Life',     short: 'Marine',  color: '#6FD79B' },
-  beaches: { label: 'Beaches & Pools', short: 'Beaches', color: '#5B9BF3' },
-  play:    { label: 'Play & Unwind',   short: 'Play',    color: '#F2669B' }
+  stay:    { label: 'Where to Stay',   short: 'Stay',    color: '#BE914F' },
+  thrills: { label: 'Water & Thrills', short: 'Thrills', color: '#2949E5' },
+  marine:  { label: 'Marine Life',     short: 'Marine',  color: '#3AB0C8' },
+  beaches: { label: 'Beaches & Pools', short: 'Beaches', color: '#27455C' },
+  play:    { label: 'Play & Unwind',   short: 'Play',    color: '#EB897C' }
 };
 
 const PLACES = [

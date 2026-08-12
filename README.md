@@ -65,7 +65,12 @@ they're resolution-independent.
   `#tray-hero-img` background in `paintHero()` (`js/map.js`) for `p.image`.
 - **Map resolution** is 2016 × 1287, which is why max zoom is capped at 2.8×.
   A higher-res export would allow deeper zoom and a sharper focused view.
-- The legend printed on the original artwork (bottom right) is covered by a
-  live glass "Map Key" panel that scales with the map.
+- **Skin** follows atlantisbahamas.com: warm cream/white surfaces, light
+  uppercase letterspaced type, and the site's gold `#BE914F` CTA. Category
+  colours are also taken from the live site (gold, brand blue `#2949E5`,
+  turquoise, deep teal `#27455C`, coral `#EB897C`).
+- **Outfit is the only typeface**, loaded from Google Fonts at 200-600.
+- The legend printed on the original artwork (bottom right) is now visible
+  again — the overlaid "Map Key" panel was removed on request.
 - Copy and links sourced from atlantisbahamas.com, August 2026.
 - Bump the `?v=N` params in `index.html` after any css/js change.

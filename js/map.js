@@ -149,7 +149,7 @@
   /* ------------------------------------------------------- filters */
 
   function buildFilters() {
-    var defs = [{ key: 'all', label: 'All', color: '#F4EDE3' }];
+    var defs = [{ key: 'all', label: 'All', color: '#1B2A38' }];
     Object.keys(CATEGORIES).forEach(function (k) {
       defs.push({ key: k, label: CATEGORIES[k].short, color: CATEGORIES[k].color });
     });
@@ -172,26 +172,6 @@
       b.addEventListener('click', function () { setFilter(d.key); });
       filters.appendChild(b);
     });
-  }
-
-  /* -------------------------------------------------------- legend */
-
-  function buildLegend() {
-    var el = document.getElementById('maplegend');
-    var counts = {};
-    PLACES.forEach(function (p) { counts[p.cat] = (counts[p.cat] || 0) + 1; });
-
-    var rows = Object.keys(CATEGORIES).map(function (k) {
-      return '<div class="lg-row" style="--c:' + CATEGORIES[k].color + '">' +
-             '<i></i><b>' + CATEGORIES[k].label + '</b><span>' + counts[k] + '</span></div>';
-    }).join('');
-
-    el.innerHTML =
-      '<div class="lg-mark">Map Key</div>' +
-      '<div class="lg-sub">Atlantis · Paradise Island</div>' +
-      '<div class="lg-rule"></div>' +
-      '<div class="lg-rows">' + rows + '</div>' +
-      '<div class="lg-foot">Select any marker for details</div>';
   }
 
   function setFilter(cat) {
@@ -288,7 +268,7 @@
     activeId = null;
     app.classList.remove('tray-open');
     tray.setAttribute('aria-hidden', 'true');
-    app.style.setProperty('--accent', '#E9B75E');
+    app.style.setProperty('--accent', '#BE914F');
     if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
     tweenTo((vw - MAP_W * minScale) / 2, (vh - MAP_H * minScale) / 2, minScale, 850);
   }
@@ -402,11 +382,17 @@
   function start() {
     buildMarkers();
     buildFilters();
-    buildLegend();
     measure(false);
 
     var hash = location.hash.replace('#', '');
     if (hash) setTimeout(function () { open(hash); }, 500);
+
+    /* a pasted/edited hash on an already-loaded page should work too */
+    window.addEventListener('hashchange', function () {
+      var id = location.hash.replace('#', '');
+      if (id && id !== activeId) open(id);
+      else if (!id && activeId) close();
+    });
   }
 
   if (document.readyState === 'loading') {
