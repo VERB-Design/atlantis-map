@@ -99,6 +99,11 @@ html,body{
   cursor:pointer;
   white-space:nowrap;
   transition:opacity .35s var(--ease), filter .35s var(--ease);
+  /* The row is as wide as dot + label, so if it took pointer events its
+     invisible label would sit on top of neighbouring dots and make them
+     unhoverable. Only the dot is a target; labels opt back in below once
+     they are actually on screen. */
+  pointer-events:none;
 }
 .mk-inner:focus-visible{ outline:none; }
 .mk-inner:focus-visible .dot{ box-shadow:0 0 0 3px #fff, 0 0 0 5px var(--ink); }
@@ -106,6 +111,7 @@ html,body{
 .dot{
   position:relative;
   flex:none;
+  pointer-events:auto;
   width:var(--dot); height:var(--dot);
   border-radius:50%;
   background:var(--c);
@@ -147,6 +153,10 @@ html,body{
   font-size:11px; font-weight:500; letter-spacing:.19em;
   padding:8px 14px 7px;
 }
+/* a permanently visible label is a real target; a hidden one never is */
+.mk.is-stay .mk-label,
+.mk.is-active .mk-label{ pointer-events:auto; }
+
 .mk-inner:hover .mk-label{ background:#fff; }
 .mk.is-active .mk-label{ background:var(--c); color:#fff; }
 
