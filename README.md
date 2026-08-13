@@ -6,15 +6,15 @@ dependencies — open `index.html` or serve the folder.
 
 ## What's in it
 
-**21 clickable markers**
+**83 clickable markers** under a five-item top menu — View all, Stay,
+Experiences, Aquaventure, Dining. Experiences drops down to a second level:
+View all, Marine Activities, Dolphin Cay, Pools, Entertainment, Casino,
+Spa & Fitness, Golf & Tennis, Shopping. Counts next to each are live.
 
-| Category | Count | Places |
-|---|---|---|
-| Where to Stay | 5 | The Royal, The Cove, The Reef, The Coral, Harborside Resort |
-| Water & Thrills | 4 | Aquaventure, Power Tower, Mayan Temple, The Rapids River |
-| Marine Life | 3 | The Dig, Dolphin Cay, Predator Lagoon |
-| Beaches & Pools | 2 | Cove Beach, Paradise Lagoon |
-| Play & Unwind | 7 | The Casino, Mandara Spa, Marina Village, Atlantis Marina, Atlantis Theatre & Nightlife, Atlantis Kids Adventures, Ocean Club Golf Course |
+Aquaventure holds the waterpark itself — slides, towers, rivers and the pools
+inside it. Everything you can eat or drink, including the Aquaventure outlets,
+sits under Dining.
+
 
 Clicking a marker flies the map to that location (offset to clear the tray)
 and slides a panel in from the left with an image, description, three key

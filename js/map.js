@@ -16,7 +16,8 @@
   var viewport = document.getElementById('viewport');
   var stage    = document.getElementById('stage');
   var mkLayer  = document.getElementById('markers');
-  var filters  = document.getElementById('filters');
+  var navMain  = document.getElementById('nav-main');
+  var navCount = document.getElementById('nav-count');
   var tray     = document.getElementById('tray');
   var heroImg  = document.getElementById('tray-hero-img');
 
@@ -57,6 +58,7 @@
     stage.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0) scale(' + s + ')';
     stage.style.setProperty('--inv', 1 / s);
     app.classList.toggle('is-zoomed', s > (vw / MAP_W) * 1.25);
+    app.classList.toggle('zoom-deep', s > (vw / MAP_W) * 1.9);
   }
 
   function setView(nx, ny, ns) {
@@ -177,46 +179,157 @@
     mkLayer.appendChild(frag);
   }
 
-  /* ------------------------------------------------------- filters */
+  /* ---------------------------------------------------------- menu */
 
-  function buildFilters() {
-    var defs = [{ key: 'all', label: 'All', color: '#1F2328' }];
+  var activeSub = 'all';
+
+  function countIn(cat, sub) {
+    return PLACES.filter(function (p) {
+      if (cat === 'all') return true;
+      if (p.cat !== cat) return false;
+      if (cat === 'experiences' && sub && sub !== 'all') return p.sub === sub;
+      return true;
+    }).length;
+  }
+
+  function buildNav() {
+    var frag = document.createDocumentFragment();
+
+    function mainBtn(key, label, colour, withChev) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'nav-btn';
+      b.dataset.cat = key;
+      b.setAttribute('aria-current', key === 'all' ? 'true' : 'false');
+      if (colour) {
+        var sw = document.createElement('span');
+        sw.className = 'swatch';
+        sw.style.setProperty('--c', colour);
+        b.appendChild(sw);
+      }
+      b.appendChild(document.createTextNode(label));
+      if (withChev) {
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('class', 'chev');
+        var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', 'M6 9l6 6 6-6');
+        svg.appendChild(path);
+        b.appendChild(svg);
+      }
+      return b;
+    }
+
+    var defs = [['all', 'View all', null]];
     Object.keys(CATEGORIES).forEach(function (k) {
-      defs.push({ key: k, label: CATEGORIES[k].short, color: CATEGORIES[k].color });
+      defs.push([k, CATEGORIES[k].label, CATEGORIES[k].color]);
     });
 
     defs.forEach(function (d) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.dataset.cat = d.key;
-      b.setAttribute('aria-pressed', d.key === 'all' ? 'true' : 'false');
+      var li = document.createElement('div');
+      li.className = 'nav-item';
+      li.dataset.cat = d[0];
 
-      var sw = document.createElement('span');
-      sw.className = 'swatch';
-      sw.style.setProperty('--c', d.color);
+      var isExp = d[0] === 'experiences';
+      var btn = mainBtn(d[0], d[1], d[2], isExp);
+      li.appendChild(btn);
 
-      var tx_ = document.createElement('span');
-      tx_.textContent = d.label;
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (isExp && li.classList.contains('is-open') && activeCat === 'experiences') {
+          li.classList.remove('is-open');
+          return;
+        }
+        closeMenus();
+        if (isExp) li.classList.add('is-open');
+        setFilter(d[0], 'all');
+      });
 
-      b.appendChild(sw);
-      b.appendChild(tx_);
-      b.addEventListener('click', function () { setFilter(d.key); });
-      filters.appendChild(b);
+      if (isExp) {
+        var sub = document.createElement('div');
+        sub.className = 'nav-sub';
+
+        var subDefs = [['all', 'View all']];
+        Object.keys(SUBCATEGORIES).forEach(function (k) {
+          subDefs.push([k, SUBCATEGORIES[k]]);
+        });
+
+        subDefs.forEach(function (sd, i) {
+          var sb = document.createElement('button');
+          sb.type = 'button';
+          sb.dataset.sub = sd[0];
+          sb.setAttribute('aria-current', sd[0] === 'all' ? 'true' : 'false');
+          sb.appendChild(document.createTextNode(sd[1]));
+          var n = document.createElement('span');
+          n.textContent = countIn('experiences', sd[0]);
+          sb.appendChild(n);
+          sb.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setFilter('experiences', sd[0]);
+            li.classList.remove('is-open');
+          });
+          sub.appendChild(sb);
+          if (i === 0) {
+            var r = document.createElement('div');
+            r.className = 'sub-rule';
+            sub.appendChild(r);
+          }
+        });
+        li.appendChild(sub);
+      }
+
+      frag.appendChild(li);
+    });
+
+    navMain.appendChild(frag);
+
+    /* click away closes the dropdown */
+    document.addEventListener('click', closeMenus);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMenus();
+    });
+
+    var toggle = document.getElementById('nav-toggle');
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = app.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   }
 
-  function setFilter(cat) {
+  function closeMenus() {
+    Array.prototype.forEach.call(navMain.querySelectorAll('.nav-item'), function (el) {
+      el.classList.remove('is-open');
+    });
+  }
+
+  function setFilter(cat, sub) {
     activeCat = cat;
+    activeSub = sub || 'all';
 
-    Array.prototype.forEach.call(filters.children, function (b) {
-      b.setAttribute('aria-pressed', b.dataset.cat === cat ? 'true' : 'false');
+    Array.prototype.forEach.call(navMain.querySelectorAll('.nav-btn'), function (b) {
+      b.setAttribute('aria-current', b.dataset.cat === cat ? 'true' : 'false');
+    });
+    Array.prototype.forEach.call(navMain.querySelectorAll('.nav-sub button'), function (b) {
+      b.setAttribute('aria-current',
+        (cat === 'experiences' && b.dataset.sub === activeSub) ? 'true' : 'false');
     });
 
+    var shown = 0;
     PLACES.forEach(function (p) {
-      var hidden = cat !== 'all' && p.cat !== cat;
-      nodes[p.id].classList.toggle('is-hidden', hidden);
-      if (hidden && p.id === activeId) close();
+      var ok = cat === 'all' ||
+        (p.cat === cat &&
+          !(cat === 'experiences' && activeSub !== 'all' && p.sub !== activeSub));
+      nodes[p.id].classList.toggle('is-hidden', !ok);
+      if (ok) shown++;
+      if (!ok && p.id === activeId) close();
     });
+
+    navCount.textContent = shown + (shown === 1 ? ' place' : ' places');
+    /* names only auto-reveal when the filtered set is small enough to read;
+       otherwise they stay on hover and selection */
+    app.classList.toggle('labels-ok', shown <= 24);
+    app.classList.remove('nav-open');
   }
 
   /* ---------------------------------------------------------- tray */
@@ -243,13 +356,17 @@
     document.getElementById('tray-title').textContent  = p.name;
     document.getElementById('tray-blurb').textContent  = p.blurb;
 
+    /* "Good to know" is optional — smaller venues carry a one-liner only */
     var ul = document.getElementById('tray-points');
+    var label = document.querySelector('.tray-label');
+    var pts = p.points || [];
     ul.innerHTML = '';
-    p.points.slice(0, 3).forEach(function (t) {
+    pts.slice(0, 3).forEach(function (t) {
       var li = document.createElement('li');
       li.textContent = t;
       ul.appendChild(li);
     });
+    ul.hidden = label.hidden = pts.length === 0;
 
     var learn = document.getElementById('tray-learn');
     var book  = document.getElementById('tray-book');
@@ -269,7 +386,7 @@
     /* fly the map to the marker, offset for the tray */
     focusPlace(p);
 
-    if (history.replaceState) history.replaceState(null, '', '#' + p.id);
+    if (history.replaceState) history.replaceState(null, '', location.pathname + location.search + '#' + p.id);
   }
 
   function focusPlace(p) {
@@ -401,7 +518,8 @@
 
   function start() {
     buildMarkers();
-    buildFilters();
+    buildNav();
+    setFilter('all', 'all');
     measure(false);
 
     var hash = location.hash.replace('#', '');

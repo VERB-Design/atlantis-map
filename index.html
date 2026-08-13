@@ -4,40 +4,44 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
 <title>Atlantis Paradise Island — Interactive Resort Map</title>
-<meta name="description" content="Explore Atlantis Paradise Island: five places to stay and the experiences across 141 acres of Aquaventure, marine habitats, beaches and Marina Village.">
+<meta name="description" content="Explore Atlantis Paradise Island: five places to stay, Aquaventure, dining and every experience across the resort.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=20">
+<link rel="stylesheet" href="css/styles.css?v=23">
 </head>
 <body>
 
 <div id="app">
 
+  <!-- ========================================================== NAV -->
+  <header id="topnav">
+    <a id="nav-brand" href="./" aria-label="Atlantis Paradise Island">
+      <span class="nb-mark">Atlantis</span>
+      <span class="nb-sub">Paradise Island</span>
+    </a>
+
+    <nav id="nav-main" aria-label="Filter the map by category"></nav>
+
+    <p id="nav-count" aria-live="polite"></p>
+
+    <button id="nav-toggle" type="button" aria-label="Show menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </header>
+
   <!-- ============================================================ MAP -->
   <div id="viewport" aria-label="Atlantis Paradise Island resort map">
     <div id="bleed" aria-hidden="true"></div>
     <div id="stage">
-      <img id="mapimg" src="assets/atlantis-map.jpg?v=20" alt="Illustrated aerial map of Atlantis Paradise Island, Bahamas" draggable="false">
+      <img id="mapimg" src="assets/atlantis-map.jpg?v=23" alt="Illustrated aerial map of Atlantis Paradise Island, Bahamas" draggable="false">
       <div id="markers"></div>
     </div>
-    <div id="vignette" aria-hidden="true"></div>
   </div>
-
-  <!-- ========================================================= BRAND -->
-  <header id="brand">
-    <h1>Atlantis</h1>
-    <p>Paradise Island · Bahamas</p>
-  </header>
 
   <!-- ========================================================= HINT -->
   <p id="hint" aria-hidden="true">Select a marker to explore</p>
-
-  <!-- ==================================================== SCALE NOTE -->
   <p id="scalenote">Drag to pan · scroll to zoom</p>
-
-  <!-- ======================================================= FILTERS -->
-  <nav id="filters" aria-label="Filter map by category"></nav>
 
   <!-- ======================================================= ZOOM UI -->
   <div id="zoomui">
@@ -68,7 +72,6 @@
       <p id="tray-kicker"></p>
       <h2 id="tray-title"></h2>
       <p id="tray-blurb"></p>
-
       <h3 class="tray-label">Good to know</h3>
       <ul id="tray-points"></ul>
     </div>
@@ -81,7 +84,7 @@
 
 </div>
 
-<script src="js/data.js?v=20"></script>
-<script src="js/map.js?v=20"></script>
+<script src="js/data.js?v=23"></script>
+<script src="js/map.js?v=23"></script>
 </body>
 </html>
