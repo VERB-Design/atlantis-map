@@ -79,8 +79,12 @@ html,body{
 
 #markers{ position:absolute; inset:0; }
 
-.mk{ position:absolute; width:0; height:0; --dot:15px; }
-.mk.is-stay{ --dot:21px; }
+.mk{ position:absolute; width:0; height:0; --dot:15px; z-index:1; }
+/* the towers carry permanent names, so they sit above the plain dots;
+   whatever is hovered or selected comes above everything */
+.mk.is-stay{ --dot:21px; z-index:2; }
+.mk:hover{ z-index:20; }
+.mk.is-active{ z-index:30; }
 
 .mk-inner{
   position:absolute;
