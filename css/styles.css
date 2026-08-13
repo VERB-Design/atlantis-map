@@ -155,8 +155,9 @@ html,body{
   transform:translateX(-4px);
   transition:opacity .3s var(--ease), transform .3s var(--ease);
 }
-#app.labels-ok .mk:not(.is-stay) .mk-label,
-#app.zoom-deep .mk:not(.is-stay) .mk-label,
+/* only the five towers are named on the map; everything else stays a dot
+   and reveals its name on hover or when selected — one at a time, never a
+   field of overlapping labels */
 .mk:not(.is-stay) .mk-inner:hover .mk-label,
 .mk.is-active:not(.is-stay) .mk-label{
   opacity:1; transform:translateX(0);
@@ -212,16 +213,19 @@ html,body{
 }
 
 /* ---- main row ---- */
-#nav-main{ flex:1 1 auto; display:flex; align-items:center; gap:2px; min-width:0; }
+#nav-main{
+  position:absolute; left:50%; transform:translateX(-50%);
+  display:flex; align-items:center; gap:4px;
+}
 .nav-item{ position:relative; }
 
 .nav-btn{
   appearance:none; border:0; cursor:pointer;
   background:transparent;
-  font-family:inherit; font-size:11px; font-weight:400;
-  letter-spacing:.17em; text-transform:uppercase;
+  font-family:inherit; font-size:16px; font-weight:400;
+  letter-spacing:0; text-transform:none;
   color:var(--body);
-  padding:9px 15px 8px;
+  padding:8px 16px;
   border-radius:2px;
   display:flex; align-items:center; gap:8px;
   white-space:nowrap;
@@ -244,7 +248,7 @@ html,body{
 /* ---- dropdown ---- */
 .nav-sub{
   position:absolute; top:calc(100% + 9px); left:0;
-  min-width:224px;
+  min-width:242px;
   padding:7px;
   background:#fff;
   border:1px solid var(--rule);
@@ -260,25 +264,18 @@ html,body{
 .nav-sub button{
   appearance:none; border:0; cursor:pointer; background:transparent;
   text-align:left;
-  font-family:inherit; font-size:11px; font-weight:400;
-  letter-spacing:.13em; text-transform:uppercase;
+  font-family:inherit; font-size:15px; font-weight:400;
+  letter-spacing:0; text-transform:none;
   color:var(--body);
-  padding:10px 13px 9px;
+  padding:9px 14px;
   border-radius:2px;
   display:flex; align-items:center; justify-content:space-between; gap:14px;
   transition:color .2s var(--ease), background .2s var(--ease);
 }
 .nav-sub button:hover{ background:rgba(31,35,40,.05); color:var(--ink); }
 .nav-sub button[aria-current="true"]{ background:var(--blue); color:#fff; }
-.nav-sub button span{ font-size:10px; opacity:.6; letter-spacing:.1em; }
+.nav-sub button span{ font-size:12px; opacity:.55; letter-spacing:0; }
 .nav-sub .sub-rule{ height:1px; margin:5px 4px; background:var(--rule); }
-
-#nav-count{
-  flex:none; margin:0;
-  font-size:9.5px; font-weight:400;
-  letter-spacing:.22em; text-transform:uppercase;
-  color:var(--muted);
-}
 
 #nav-toggle{
   display:none;
@@ -533,7 +530,6 @@ html,body{
 }
 
 @media (max-width:900px){
-  #nav-count{ display:none; }
   #nav-brand{ padding-right:18px; }
   #topnav{ gap:16px; padding:0 16px; }
 }
@@ -543,6 +539,7 @@ html,body{
   #nav-toggle{ display:flex; margin-left:auto; }
   #nav-main{
     position:absolute; top:var(--nav-h); left:0; right:0;
+    transform:none;
     flex-direction:column; align-items:stretch; gap:0;
     padding:8px;
     background:#fff;

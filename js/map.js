@@ -17,7 +17,6 @@
   var stage    = document.getElementById('stage');
   var mkLayer  = document.getElementById('markers');
   var navMain  = document.getElementById('nav-main');
-  var navCount = document.getElementById('nav-count');
   var tray     = document.getElementById('tray');
   var heroImg  = document.getElementById('tray-hero-img');
 
@@ -58,7 +57,6 @@
     stage.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0) scale(' + s + ')';
     stage.style.setProperty('--inv', 1 / s);
     app.classList.toggle('is-zoomed', s > (vw / MAP_W) * 1.25);
-    app.classList.toggle('zoom-deep', s > (vw / MAP_W) * 1.9);
   }
 
   function setView(nx, ny, ns) {
@@ -315,20 +313,15 @@
         (cat === 'experiences' && b.dataset.sub === activeSub) ? 'true' : 'false');
     });
 
-    var shown = 0;
     PLACES.forEach(function (p) {
       var ok = cat === 'all' ||
         (p.cat === cat &&
           !(cat === 'experiences' && activeSub !== 'all' && p.sub !== activeSub));
       nodes[p.id].classList.toggle('is-hidden', !ok);
-      if (ok) shown++;
       if (!ok && p.id === activeId) close();
     });
 
-    navCount.textContent = shown + (shown === 1 ? ' place' : ' places');
-    /* names only auto-reveal when the filtered set is small enough to read;
-       otherwise they stay on hover and selection */
-    app.classList.toggle('labels-ok', shown <= 24);
+
     app.classList.remove('nav-open');
   }
 
